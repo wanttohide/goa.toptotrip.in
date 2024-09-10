@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goa Tourism</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #121212;
+      color: #e0e0e0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #004d40;
+      padding: 10px 20px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    header.dark {
+      background-color: #1a1a1a;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+    }
+    .search input {
+      padding: 5px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+    }
+    .search button {
+      padding: 5px 10px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    nav ul {
+      list-style-type: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+    nav.dark ul li a {
+      color: #e0e0e0;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: all 0.3s;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    nav ul.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #004d40;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    nav.dark ul.active {
+      background-color: #1a1a1a;
+    }
+    nav ul.active li {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+    nav ul.active li:last-child {
+      margin-bottom: 0;
+    }
+    .section {
+      padding: 50px 0;
+      background: #e0f7fa;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      border-radius: 8px;
+      animation: fadeIn 1s ease;
+    }
+    body.dark .section {
+      background: #1a1a1a;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .places {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .places .place {
+      flex: 0 0 48%;
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s;
+    }
+    body.dark .places .place {
+      background: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+    .places .place:hover {
+      transform: translateY(-5px);
+    }
+    .places .place img {
+      width: 100px;
+      height: 100px;
+      margin-right: 20px;
+      border-radius: 8px;
+    }
+    .rating {
+      font-weight: bold;
+      margin-left: auto;
+    }
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    @media (max-width: 600px) {
+      .places .place {
+        flex: 0 0 48%;
+        margin: 1%;
+      }
+    }
+    @media (max-width: 480px) {
+      .places .place {
+        flex: 0 0 48%;
+        margin: 1%;
+      }
+      nav ul.active {
+        width: calc(100% - 40px);
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Goa Tourism</div>
+    <div class="search">
+      <input type="text" id="searchBox" placeholder="Search...">
+      <button onclick="performSearch()">Search</button>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#basic-info">Basic Info</a></li>
+        <li><a href="#languages">Languages</a></li>
+        <li><a href="#places">Places</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button onclick="toggleTheme()">Toggle Theme</button></li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section id="intro" class="section intro">
+      <h2>Introduction</h2>
+      <p>Important numbers and an outline map of Goa.</p>
+    </section>
+
+    <section id="video" class="section video">
+      <h2>North Goa vs South Goa</h2>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section id="basic-info" class="section basic-info">
+      <h2>Basic Information</h2>
+      <p>Basic information about Goa.</p>
+    </section>
+
+    <section id="languages" class="section languages">
+      <h2>Goa in Multiple Languages</h2>
+      <p>Goa written in several languages.</p>
+    </section>
+
+    <section id="places" class="section places">
+      <h2>Places to Visit</h2>
+      <div class="place">
+        <img src="north_goa_place.jpg" alt="North Goa Place">
+        <div>North Goa Place Name</div>
+        <div class="rating">XX.XX</div>
+      </div>
+      <div class="place">
+        <img src="south_goa_place.jpg" alt="South Goa Place">
+        <div>South Goa Place Name</div>
+        <div class="rating">XX.XX</div>
+      </div>
+      <!-- Add more places here -->
+    </section>
+
+    <section id="contact" class="section contact">
+      <h2>Contact Us</h2>
+      <p>Details on how to contact.</p>
+    </section>
+  </div>
+
+  <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('nav ul');
+      const hamburger = document.querySelector('.hamburger');
+      nav.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
+    function performSearch() {
+      const query = document.getElementById('searchBox').value;
+      alert('You searched for: ' + query);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      document.querySelector('header').classList.toggle('dark');
+      document.querySelector('nav').classList.toggle('dark');
+    }
+
+    window.onscroll = function() {
+      const scrollBtn = document.querySelector('.scroll-to-top');
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollBtn.style.display = 'flex';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
